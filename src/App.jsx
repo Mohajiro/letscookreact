@@ -5,6 +5,9 @@ import { useState } from "react";
 import ListGroup from "./components/ListGroup";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import ModificationRecipes from "./components/ModificationRecipes";
+import LigneRecipes from "./components/LigneRecipes";
+
 
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -17,6 +20,9 @@ function App() {
         <ListGroup searchQuery={searchQuery} />
       </main>
       <Footer />
+
+      <ModificationRecipes />
+      <LigneRecipes />
     </div>
   );
 }
