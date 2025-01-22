@@ -49,7 +49,7 @@ function ListGroup({ searchQuery }) {
           </div>
           <a
             href="#"
-            className="text-blue-600 text-sm font-medium hover:underline"
+            className="text-blue-600 text-sm font-medium"
           >
             En savoir plus...
           </a>
