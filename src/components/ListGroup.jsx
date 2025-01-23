@@ -1,30 +1,66 @@
 import { useState } from "react";
-//import des recettes
 import recipes from "../data/recettes.json";
-//declaration de compenent avec parametre searchQuery pour la recherche qui viens de Header
+
+// Попап для отображения деталей рецепта
+function RecipePopup({ recipe, onClose }) {
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+      <div className="bg-white rounded-lg shadow-lg p-6 max-w-2xl w-full">
+        <button
+          onClick={onClose}
+          className="text-gray-500 hover:text-gray-700 float-right"
+        >
+          ✖
+        </button>
+        <img
+          src={recipe.imageUrl}
+          alt={recipe.title}
+          className="w-full h-48 object-cover rounded-lg mb-4"
+        />
+        <h2 className="text-2xl font-bold mb-4">{recipe.title}</h2>
+        <p className="text-sm text-gray-600 mb-4">{recipe.description}</p>
+        <p className="font-semibold mb-2">Catégorie: {recipe.category}</p>
+        <p className="font-semibold mb-2">Difficulté: {recipe.difficulty}/5</p>
+        <h3 className="text-lg font-semibold mb-2">Ingrédients:</h3>
+        <ul className="list-disc list-inside mb-4">
+          {recipe.ingredients.map((item, idx) => (
+            <li key={idx}>{item}</li>
+          ))}
+        </ul>
+        <h3 className="text-lg font-semibold mb-2">Instructions:</h3>
+        <ol className="list-decimal list-inside">
+          {recipe.instructions.map((step, idx) => (
+            <li key={idx}>{step}</li>
+          ))}
+        </ol>
+        <p className="text-sm text-gray-500 mt-4">
+          Date de création: {recipe.date} | Auteur: {recipe.author}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 function ListGroup({ searchQuery }) {
-  //Index de element selectionée pour changement de couleur
-  const [selectedIndex, setSelectedIndex] = useState(-1);
-  // Creation de evenement clique qui affiche dans console title de recette cliqué et change son couleur 
-  const handleClick = (event, recipe, id) => {
-    console.log(`Clicked recipe: ${recipe.title}`);
-    setSelectedIndex(id);
-  };
-  // Creation de const qvec les recettes filtre en cas de recherche via inpur de Header
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
+
   const filteredRecipes = recipes.filter((recipe) =>
     recipe.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
-  // Creation de Liste de reccetes afichées via methode JS maps
+
+  const handleRecipeClick = (recipe) => {
+    setSelectedRecipe(recipe); // Устанавливаем выбранный рецепт
+  };
+
+  const closePopup = () => {
+    setSelectedRecipe(null); // Закрываем попап
+  };
+
   const ListRecipes = filteredRecipes.map((recipe, id) => (
     <li
       key={id}
-      className={
-        selectedIndex === id
-          ? "bg-orange-500 shadow-md rounded-lg overflow-hidden border border-gray-200"
-          : "bg-white shadow-md rounded-lg overflow-hidden border border-gray-200"
-      }
-      //Juste pour entrenement la button de changement du bg couleur
-      onClick={(event) => handleClick(event, recipe, id)}
+      className="bg-white shadow-md rounded-lg overflow-hidden border border-gray-200 cursor-pointer"
+      onClick={() => handleRecipeClick(recipe)} // Открываем попап при клике
     >
       <img
         src={recipe.imageUrl}
@@ -47,27 +83,23 @@ function ListGroup({ searchQuery }) {
               ></span>
             ))}
           </div>
-          <a
-            href="#"
-            className="text-blue-600 text-sm font-medium"
-          >
-            En savoir plus...
-          </a>
+          <span className="text-blue-600 text-sm font-medium">
+            Voir plus
+          </span>
         </div>
       </div>
     </li>
   ));
 
-
-
   return (
-
-    //Si longuer de tableau filtredRecipes === 0 ça va afficher 'No items found' si non ça va afficher la liste de recettes
     <>
       {filteredRecipes.length === 0 && <p>No items found</p>}
       <ul className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {ListRecipes}
       </ul>
+      {selectedRecipe && (
+        <RecipePopup recipe={selectedRecipe} onClose={closePopup} />
+      )}
     </>
   );
 }

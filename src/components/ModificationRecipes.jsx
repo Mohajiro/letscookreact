@@ -1,30 +1,121 @@
-function ModificationRecipes(){
+import { useState } from "react";
+import recipes from "../data/recettes.json"; 
 
-    return(
-        <>
-        <h2>Ajouter ou modifier un recette</h2>
-        <form>  
+function ModificationRecipes() {
+  const [formData, setFormData] = useState({
+    title: "",
+    difficulty: "",
+    category: "",
+    description: "",
+  });
 
-            <label htmlFor="inputTitle">Titre:</label>
-            <input type="text" id="inputTitle" placeholder="Titre de recette"/>
+  const handleInputChange = (event) => {
+    const { id, value } = event.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [id]: value,
+    }));
+  };
 
-            <label htmlFor="inputDifficulte">Difficulté (1-5):</label>
-            <select name="inputDifficulte" id="inputDifficulte">
-            <option value="">--Please choose la difficulté (0-1)--</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            </select>
+  const handleSave = (event) => {
+    event.preventDefault(); 
+    const newRecipe = {
+      title: formData.title,
+      difficulty: parseInt(formData.difficulty, 10),
+      category: formData.category,
+      description: formData.description,
+      imageUrl: "default.jpg", 
+    };
 
-            <label htmlFor="inputCategorie">Catégorie:</label>
-            <input type="text" className="inputCategorie" placeholder="Catégorie de la recette"/>
+    recipes.push(newRecipe); 
+    console.log("Updated Recipes:", recipes); 
 
-            <label htmlFor="inputDescription">Déscription:</label>
-            <textarea name="inputDescription" id="inputDescription">Déscription de la recette</textarea>
-        </form>
-        </>
- )}
+    setFormData({
+      title: "",
+      difficulty: "",
+      category: "",
+      description: "",
+    });
+  };
 
- export default ModificationRecipes;
+  const handleCancel = () => {
+
+    setFormData({
+      title: "",
+      difficulty: "",
+      category: "",
+      description: "",
+    });
+  };
+
+  return (
+    <form className="flex flex-col">
+      <h2 className="text-xl">Ajouter ou modifier une recette</h2>
+
+      <label htmlFor="title">Titre:</label>
+      <input
+        type="text"
+        id="title"
+        value={formData.title}
+        onChange={handleInputChange}
+        placeholder="Titre de recette"
+        required
+      />
+
+      <label htmlFor="difficulty">Difficulté (1-5):</label>
+      <select
+        id="difficulty"
+        value={formData.difficulty}
+        onChange={handleInputChange}
+        required
+      >
+        <option value="" disabled>
+          --Choisissez la difficulté (1-5)--
+        </option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+
+      <label htmlFor="category">Catégorie:</label>
+      <input
+        type="text"
+        id="category"
+        value={formData.category}
+        onChange={handleInputChange}
+        placeholder="Catégorie de la recette"
+        required
+      />
+
+      <label htmlFor="description">Description:</label>
+      <textarea
+        id="description"
+        value={formData.description}
+        onChange={handleInputChange}
+        placeholder="Description de la recette"
+        required
+      />
+
+      <div className="flex space-x-4 my-3">
+        <button
+          type="button"
+          onClick={handleSave}
+          className="p-2 bg-orange-500 text-white rounded-lg shadow-md hover:bg-orange-600"
+        >
+          Sauvegarder
+        </button>
+        <button
+          type="button"
+          onClick={handleCancel}
+          className="p-2 bg-orange-500 text-white rounded-lg shadow-md hover:bg-orange-600"
+        >
+          Annuler
+        </button>
+      </div>
+    </form>
+  );
+}
+
+export default ModificationRecipes;
