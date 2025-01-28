@@ -1,13 +1,30 @@
-import { useState } from "react";
-import recipes from "../data/recettes.json"; 
+import { useState, useEffect } from "react";
 
-function ModificationRecipes() {
+function ModificationRecipes({ recipe, onSave, onCancel }) {
   const [formData, setFormData] = useState({
     title: "",
     difficulty: "",
     category: "",
     description: "",
   });
+
+  useEffect(() => {
+    if (recipe) {
+      setFormData({
+        title: recipe.title || "",
+        difficulty: recipe.difficulty?.toString() || "",
+        category: recipe.category || "",
+        description: recipe.description || "",
+      });
+    } else {
+      setFormData({
+        title: "",
+        difficulty: "",
+        category: "",
+        description: "",
+      });
+    }
+  }, [recipe]);
 
   const handleInputChange = (event) => {
     const { id, value } = event.target;
@@ -18,98 +35,68 @@ function ModificationRecipes() {
   };
 
   const handleSave = (event) => {
-    event.preventDefault(); 
+    event.preventDefault();
+    if (!formData.title || !formData.difficulty || !formData.category || !formData.description) {
+      alert("Veuillez remplir tous les champs !");
+      return;
+    }
     const newRecipe = {
-      title: formData.title,
+      ...formData,
       difficulty: parseInt(formData.difficulty, 10),
-      category: formData.category,
-      description: formData.description,
-      imageUrl: "default.jpg", 
+      id: recipe?.id || null,
     };
-
-    recipes.push(newRecipe); 
-    console.log("Updated Recipes:", recipes); 
-
-    setFormData({
-      title: "",
-      difficulty: "",
-      category: "",
-      description: "",
-    });
-  };
-
-  const handleCancel = () => {
-
-    setFormData({
-      title: "",
-      difficulty: "",
-      category: "",
-      description: "",
-    });
+    onSave(newRecipe);
   };
 
   return (
-    <form className="flex flex-col">
-      <h2 className="text-xl">Ajouter ou modifier une recette</h2>
-
-      <label htmlFor="title">Titre:</label>
+    <form className="bg-gray-100 p-6 rounded-lg shadow-lg">
+      <h2 className="text-xl font-bold text-center mb-4">
+        {recipe ? "✏ Modifier la recette" : "➕ Ajouter une nouvelle recette"}
+      </h2>
       <input
         type="text"
         id="title"
         value={formData.title}
         onChange={handleInputChange}
-        placeholder="Titre de recette"
-        required
+        placeholder="Titre"
+        className="w-full p-2 border rounded-lg mt-2"
       />
-
-      <label htmlFor="difficulty">Difficulté (1-5):</label>
       <select
         id="difficulty"
         value={formData.difficulty}
         onChange={handleInputChange}
-        required
+        className="w-full p-2 border rounded-lg mt-2"
       >
-        <option value="" disabled>
-          --Choisissez la difficulté (1-5)--
-        </option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
+        <option value="">Difficulté</option>
+        {[1, 2, 3, 4, 5].map((num) => (
+          <option key={num} value={num}>{num}</option>
+        ))}
       </select>
-
-      <label htmlFor="category">Catégorie:</label>
       <input
         type="text"
         id="category"
         value={formData.category}
         onChange={handleInputChange}
-        placeholder="Catégorie de la recette"
-        required
+        placeholder="Catégorie"
+        className="w-full p-2 border rounded-lg mt-2"
       />
-
-      <label htmlFor="description">Description:</label>
       <textarea
         id="description"
         value={formData.description}
         onChange={handleInputChange}
-        placeholder="Description de la recette"
-        required
-      />
-
-      <div className="flex space-x-4 my-3">
+        placeholder="Description"
+        className="w-full p-2 border rounded-lg mt-2 h-24"
+      ></textarea>
+      <div className="flex justify-between mt-4">
         <button
-          type="button"
           onClick={handleSave}
-          className="p-2 bg-orange-500 text-white rounded-lg shadow-md hover:bg-orange-600"
+          className="bg-green-500 text-white px-4 py-2 rounded-lg"
         >
-          Sauvegarder
+          Enregistrer
         </button>
         <button
-          type="button"
-          onClick={handleCancel}
-          className="p-2 bg-orange-500 text-white rounded-lg shadow-md hover:bg-orange-600"
+          onClick={onCancel}
+          className="bg-gray-500 text-white px-4 py-2 rounded-lg"
         >
           Annuler
         </button>

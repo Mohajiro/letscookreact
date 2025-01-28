@@ -12,7 +12,7 @@ function Header({ value, onSearch, onAdd, onLogoClick }) {
           type="text"
           value={value}
           placeholder="Recherche"
-          className="px-4 py-2 rounded-lg border border-gray-300"
+          className="px-4 py-2 rounded-lg border border-gray-300 bg-white"
           onChange={(event) => onSearch(event.target.value)}
         />
         <button
