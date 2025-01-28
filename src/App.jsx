@@ -9,35 +9,35 @@ import LigneRecipes from "./components/LigneRecipes";
 import initialRecipes from "./data/recettes.json";
 
 function App() {
-  const [searchQuery, setSearchQuery] = useState(""); // Поисковый запрос
-  const [currentView, setCurrentView] = useState("list"); // Текущий вид: список или редактирование
-  const [recipes, setRecipes] = useState(initialRecipes); // Общий список рецептов
-  const [selectedRecipe, setSelectedRecipe] = useState(null); // Выбранный для редактирования рецепт
+  const [searchQuery, setSearchQuery] = useState(""); // Request de recherche
+  const [currentView, setCurrentView] = useState("list"); // Le vue actuelle
+  const [recipes, setRecipes] = useState(initialRecipes); // Liste des recettes
+  const [selectedRecipe, setSelectedRecipe] = useState(null); // Recette selectioné pour la modification
 
-  // Сохранение рецепта (новый или обновленный)
+  // Sauvgarde des recettes nouveau ou modifié
   const handleSaveRecipe = (recipe) => {
     if (recipe.id) {
-      // Обновление существующего рецепта
+      // Mis en jour du recette existant
       setRecipes((prevRecipes) =>
         prevRecipes.map((r) => (r.id === recipe.id ? recipe : r))
       );
     } else {
-      // Добавление нового рецепта
+      // Ajutement du nouveau recette
       setRecipes((prevRecipes) => [
         ...prevRecipes,
         { ...recipe, id: Date.now(), imageUrl: "default.jpg" },
       ]);
     }
-    setSelectedRecipe(null); // Очистка выбранного рецепта
-    setCurrentView("list"); // Возврат к списку
+    setSelectedRecipe(null); // Netoyage de recette selectioné
+    setCurrentView("list"); // Retour vers la liste
   };
 
-  // Удаление рецепта
+  // Suprimmation du recette
   const handleDeleteRecipe = (id) => {
     setRecipes((prevRecipes) => prevRecipes.filter((recipe) => recipe.id !== id));
   };
 
-  // Переход в режим редактирования
+  // Entre dans la mode de modification
   const handleEditRecipe = (recipe) => {
     setSelectedRecipe(recipe);
     setCurrentView("modify");

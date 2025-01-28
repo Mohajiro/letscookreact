@@ -1,3 +1,5 @@
+import profileIcon from "../assets/user.png";
+
 function Header({ value, onSearch, onAdd, onLogoClick }) {
   return (
     <header className="bg-orange-200">
@@ -16,10 +18,10 @@ function Header({ value, onSearch, onAdd, onLogoClick }) {
           onChange={(event) => onSearch(event.target.value)}
         />
         <button
-          className="ml-auto px-4 py-2 bg-orange-500 text-white rounded-lg shadow-md hover:bg-orange-600"
+          className="ml-auto p-2 text-white rounded-lg shadow-md"
           onClick={onAdd} 
         >
-          add+
+          <img src={profileIcon} alt="Profile" width={24} />
         </button>
       </div>
     </header>

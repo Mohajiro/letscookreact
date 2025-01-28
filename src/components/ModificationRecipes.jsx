@@ -51,7 +51,7 @@ function ModificationRecipes({ recipe, onSave, onCancel }) {
   return (
     <form className="bg-gray-100 p-6 rounded-lg shadow-lg">
       <h2 className="text-xl font-bold text-center mb-4">
-        {recipe ? "✏ Modifier la recette" : "➕ Ajouter une nouvelle recette"}
+        {recipe ? "Modifier la recette" : "Ajouter une nouvelle recette"}
       </h2>
       <input
         type="text"

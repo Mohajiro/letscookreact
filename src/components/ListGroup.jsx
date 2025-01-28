@@ -14,7 +14,7 @@ function ListGroup({ recipes, searchQuery, onEdit }) {
         <div
           key={recipe.id}
           className="bg-white shadow-lg rounded-xl overflow-hidden cursor-pointer"
-          onClick={() => setSelectedRecipe(recipe)} // Открыть попап
+          onClick={() => setSelectedRecipe(recipe)} // Ouvrir pop-up
         >
           <img
             src={recipe.imageUrl || "default.jpg"}
@@ -38,7 +38,7 @@ function ListGroup({ recipes, searchQuery, onEdit }) {
       {selectedRecipe && (
         <RecipePopup
           recipe={selectedRecipe}
-          onClose={() => setSelectedRecipe(null)} // Закрыть попап
+          onClose={() => setSelectedRecipe(null)} // Fermer pop-up
         />
       )}
     </div>

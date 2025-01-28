@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 function RecipePopup({ recipe, onClose }) {
   const popupRef = useRef(null);
 
-  // Закрытие попапа при клике вне его области
+  // Fermeture de pop-up
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (popupRef.current && !popupRef.current.contains(event.target)) {
@@ -25,9 +25,9 @@ function RecipePopup({ recipe, onClose }) {
       >
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+          className="absolute text-xl top-1 right-1 text-gray-500 hover:text-gray-700"
         >
-          ✖
+          X
         </button>
         <img
           src={recipe.imageUrl || "default.jpg"}

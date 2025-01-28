@@ -23,7 +23,12 @@ function LigneRecipes({ recipes, onEdit, onDelete }) {
                 Difficulté: {recipe.difficulty}/5
               </span>
               <div className="flex space-x-2">
-               
+                <button
+                  onClick={() => onEdit(recipe)}
+                  className="bg-blue-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-blue-600"
+                >
+                  Modifier
+                </button>
                 <button
                   onClick={() => onDelete(recipe.id)}
                   className="bg-red-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-red-600"
