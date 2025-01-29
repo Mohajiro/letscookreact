@@ -1,6 +1,11 @@
+// Compenent LigneRecepts recevoit 3 Propse
+// recipes - la liste des recettes qui arrive depuis App.jsx
+// onEdit - pour la boutton  Modifier
+// onDelete - pour la boutton Supprimer
 function LigneRecipes({ recipes, onEdit, onDelete }) {
   return (
     <ul className="space-y-4">
+    {/* recipes.map permet de recuperer chaque objet de tableau et les transformer en format d'une balise li avec key={recipe.id} qui permet au React de identifier chaque element */}
       {recipes.map((recipe) => (
         <li
           key={recipe.id}

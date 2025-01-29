@@ -42,9 +42,10 @@ function App() {
     setSelectedRecipe(recipe);
     setCurrentView("modify");
   };
-
+  // Retour de contenue de page
   return (
     <div className="min-h-screen bg-gray-100">
+
       <Header
         value={searchQuery}
         onSearch={setSearchQuery}
@@ -54,6 +55,7 @@ function App() {
         }}
         onLogoClick={() => setCurrentView("list")}
       />
+      
       <main className="container mx-auto px-4 py-8 px-8 md:px-12 lg:px-20">
         <h2 className="text-3xl font-bold text-center mb-6">All Recipes</h2>
         {currentView === "list" && (

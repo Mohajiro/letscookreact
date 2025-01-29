@@ -2,7 +2,7 @@ import { useState } from "react";
 import RecipePopup from "./RecipePopup";
 
 function ListGroup({ recipes, searchQuery, onEdit }) {
-  const [selectedRecipe, setSelectedRecipe] = useState(null); // Управление попапом
+  const [selectedRecipe, setSelectedRecipe] = useState(null); // Gerer pop-up
 
   const filteredRecipes = recipes.filter((recipe) =>
     recipe.title.toLowerCase().includes(searchQuery.toLowerCase())
