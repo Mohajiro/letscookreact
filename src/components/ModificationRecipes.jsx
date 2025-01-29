@@ -90,13 +90,13 @@ function ModificationRecipes({ recipe, onSave, onCancel }) {
       <div className="flex justify-between mt-4">
         <button
           onClick={handleSave}
-          className="bg-green-500 text-white px-4 py-2 rounded-lg"
+          className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-800"
         >
           Enregistrer
         </button>
         <button
           onClick={onCancel}
-          className="bg-gray-500 text-white px-4 py-2 rounded-lg"
+          className="bg-orange-400 text-white px-4 py-2 rounded-lg hover:bg-orange-200"
         >
           Annuler
         </button>

@@ -159,4 +159,4 @@ Mise en place d'une API REST pour stocker et manipuler les recettes.
 
 Déploiement
 
-Le projet est déployé sur Vercel. Accédez à l'application ici : [Let's Cook.](https://letscookreact-git-dev-s8zs-projects.vercel.app/)
+Le projet est déployé sur Vercel. Accédez à l'application ici : [Let's Cook.](https://letscookreact-git-dev-s8zs-projects.vercel.app/
