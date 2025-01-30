@@ -2,9 +2,6 @@ import { useEffect, useRef } from "react";
 
 /**
  * Composant `RecipePopup` qui affiche une recette en détail sous forme de pop-up.
- * 
- * @param {Object} recipe - L'objet contenant les détails de la recette.
- * @param {Function} onClose - Fonction permettant de fermer la fenêtre modale.
  */
 function RecipePopup({ recipe, onClose }) {
   const popupRef = useRef(null); // Référence pour détecter les clics en dehors du pop-up
@@ -27,7 +24,7 @@ function RecipePopup({ recipe, onClose }) {
 
   return (
     // Arrière-plan semi-transparent qui couvre toute la fenêtre
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div className="fixed inset-0 bg-black/70 flex justify-center items-center z-50">
       {/* Fenêtre modale qui contient les détails de la recette */}
       <div ref={popupRef} className="bg-white rounded-lg shadow-lg p-4 max-w-md w-full relative">
         
@@ -41,7 +38,7 @@ function RecipePopup({ recipe, onClose }) {
 
         {/* Image de la recette */}
         <img
-          src={recipe.imageUrl || "default.jpg"} // Image par défaut si aucune n'est fournie
+          src={recipe.imageUrl || `https://placehold.co/600x400?text=${recipe.title}`} // Image par défaut si aucune n'est fournie
           alt={recipe.title}
           className="w-full h-40 object-cover rounded-lg mb-4"
         />

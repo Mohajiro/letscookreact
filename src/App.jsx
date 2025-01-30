@@ -9,56 +9,63 @@ import LigneRecipes from "./components/LigneRecipes";
 import initialRecipes from "./data/recettes.json";
 
 function App() {
-  const [searchQuery, setSearchQuery] = useState(""); // Request de recherche
-  const [currentView, setCurrentView] = useState("list"); // Le vue actuelle
-  const [recipes, setRecipes] = useState(initialRecipes); // Liste des recettes
-  const [selectedRecipe, setSelectedRecipe] = useState(null); // Recette selectioné pour la modification
-  const [localStorageData, setLocalStorageData] = useState(initialRecipes);
-  console.log(recipes);
-  const variable = [];
-  if (localStorage.getItem('recipes') === null) {
-    localStorage.setItem('recipes', JSON.stringify(initialRecipes));
-  } 
+  const [searchQuery, setSearchQuery] = useState(""); // Recherche
+  const [currentView, setCurrentView] = useState("list"); // Vue actuelle
+  const [recipes, setRecipes] = useState([]); // Liste des recettes
+  const [selectedRecipe, setSelectedRecipe] = useState(null); // Recette sélectionnée
 
+  // **1. Charger les recettes depuis localStorage au premier rendu**
   useEffect(() => {
-    let tempLocalStorageData = recipes;
-    localStorage.setItem('recipes', JSON.stringify(recipes));
-    setLocalStorageData(tempLocalStorageData);
+    const storedRecipes = localStorage.getItem("recipes");
+    if (storedRecipes) {
+      setRecipes(JSON.parse(storedRecipes));
+    } else {
+      setRecipes(initialRecipes);
+      localStorage.setItem("recipes", JSON.stringify(initialRecipes));
+    }
+  }, []);
+
+  // **2. Sauvegarder automatiquement les recettes dans localStorage lorsqu'elles changent**
+  useEffect(() => {
+    if (recipes.length > 0) {
+      localStorage.setItem("recipes", JSON.stringify(recipes));
+    }
   }, [recipes]);
 
-  // Sauvgarde des recettes nouveau ou modifié
+  // **3. Ajouter ou modifier une recette**
   const handleSaveRecipe = (recipe) => {
- 
-    if (recipe.id) {
-      // Mis en jour du recette existant
-      setRecipes((prevRecipes) =>
-        prevRecipes.map((r) => (r.id === recipe.id ? recipe : r))
-      );
-    } else {
-      // Ajutement du nouveau recette
-      setRecipes((prevRecipes) => [
-        ...prevRecipes,
-        { ...recipe, id: Date.now(), imageUrl: `https://placehold.co/600x400?text=${recipe.title}` },
-      ]);
-    }
-    setSelectedRecipe(null); // Netoyage de recette selectioné
-    setCurrentView("list"); // Retour vers la liste
-  };
+    setRecipes((prevRecipes) =>
+      recipe.id
+        ? prevRecipes.map((r) => (r.id === recipe.id ? recipe : r)) // Modifier une recette existante
+        : [
+            ...prevRecipes,
+            {
+              ...recipe,
+              id: Date.now(),
+              imageUrl: `https://placehold.co/600x400?text=${recipe.title}`,
+              ingredients: recipe.ingredients || [], // Ajoute une liste vide si manquante
+              instructions: recipe.instructions || [], // Ajoute une liste vide si manquante
+            },
+          ]
+    );
+  
+    setSelectedRecipe(null);
+    setCurrentView("list");
+  };  
 
-  // Suprimmation du recette
+  // **4. Supprimer une recette**
   const handleDeleteRecipe = (id) => {
     setRecipes((prevRecipes) => prevRecipes.filter((recipe) => recipe.id !== id));
   };
 
-  // Entre dans la mode de modification
+  // **5. Activer le mode modification**
   const handleEditRecipe = (recipe) => {
     setSelectedRecipe(recipe);
     setCurrentView("modify");
   };
-  // Retour de contenue de page
+
   return (
     <div className="min-h-screen bg-gray-100">
-
       <Header
         value={searchQuery}
         onSearch={setSearchQuery}
