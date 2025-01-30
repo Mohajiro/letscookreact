@@ -79,7 +79,7 @@ function App() {
           />
         )}
         {currentView === "modify" && (
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             <ModificationRecipes
               recipe={selectedRecipe}
               onSave={handleSaveRecipe}
