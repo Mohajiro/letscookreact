@@ -1,14 +1,14 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 
-function RenderStars({ difficulty }) {
+function Stars({ difficulty }) {
   return (
-    <span>
+    <div>
       {[...Array(5)].map((_, i) => (
         <FontAwesomeIcon key={i} icon={faStar} className={i < difficulty ? "text-yellow-500" : "text-gray-300"} />
       ))}
-    </span>
+    </div>
   );
 }
 
-export default RenderStars;
+export default Stars;
