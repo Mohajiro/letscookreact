@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // Import des components
 import ListGroup from "./components/ListGroup";
 import Header from "./components/Header";
@@ -13,9 +13,22 @@ function App() {
   const [currentView, setCurrentView] = useState("list"); // Le vue actuelle
   const [recipes, setRecipes] = useState(initialRecipes); // Liste des recettes
   const [selectedRecipe, setSelectedRecipe] = useState(null); // Recette selectioné pour la modification
+  const [localStorageData, setLocalStorageData] = useState(initialRecipes);
+  console.log(recipes);
+  const variable = [];
+  if (localStorage.getItem('recipes') === null) {
+    localStorage.setItem('recipes', JSON.stringify(initialRecipes));
+  } 
+
+  useEffect(() => {
+    let tempLocalStorageData = recipes;
+    localStorage.setItem('recipes', JSON.stringify(recipes));
+    setLocalStorageData(tempLocalStorageData);
+  }, [recipes]);
 
   // Sauvgarde des recettes nouveau ou modifié
   const handleSaveRecipe = (recipe) => {
+ 
     if (recipe.id) {
       // Mis en jour du recette existant
       setRecipes((prevRecipes) =>
@@ -55,7 +68,7 @@ function App() {
         }}
         onLogoClick={() => setCurrentView("list")}
       />
-      
+
       <main className="container mx-auto px-4 py-8 px-8 md:px-12 lg:px-20">
         <h2 className="text-3xl font-bold text-center mb-6">All Recipes</h2>
         {currentView === "list" && (

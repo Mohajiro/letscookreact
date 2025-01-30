@@ -25,7 +25,7 @@ function Header({ value, onSearch, onAdd, onLogoClick }) {
           onChange={(event) => onSearch(event.target.value)} // Met à jour la valeur de recherche à chaque frappe
         />
         <button
-          className="ml-auto p-2 text-white rounded-lg shadow-md"
+          className="ml-auto p-2 bg-white rounded-lg shadow-md hover:border-black"
           onClick={onAdd} // Au clic, exécute la fonction onAdd
         >
           <img src={profileIcon} alt="Profile" width={24} />
