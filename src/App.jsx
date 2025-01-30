@@ -25,7 +25,7 @@ function App() {
       // Ajutement du nouveau recette
       setRecipes((prevRecipes) => [
         ...prevRecipes,
-        { ...recipe, id: Date.now(), imageUrl: "default.jpg" },
+        { ...recipe, id: Date.now(), imageUrl: `https://placehold.co/600x400?text=${recipe.title}` },
       ]);
     }
     setSelectedRecipe(null); // Netoyage de recette selectioné

@@ -17,7 +17,7 @@ function ListGroup({ recipes, searchQuery, onEdit }) {
           onClick={() => setSelectedRecipe(recipe)} // Ouvrir pop-up
         >
           <img
-            src={recipe.imageUrl || "default.jpg"}
+            src={recipe.imageUrl || `https://placehold.co/600x400?text=${recipe.title}`}
             alt={recipe.title}
             className="w-full h-48 object-cover"
           />
@@ -26,11 +26,15 @@ function ListGroup({ recipes, searchQuery, onEdit }) {
             <p className="text-sm text-gray-600 mt-2 line-clamp-3">
               {recipe.description}
             </p>
-            <div className="flex justify-between items-center mt-4">
-              <span className="text-gray-500 text-xs">
-                Difficulté: {recipe.difficulty}/5
-              </span>
-              
+            <div className="flex items-center justify-between">
+              <div className="flex space-x-1">
+                {[...Array(5)].map((_, i) => (
+                  <div
+                    key={i}
+                    className={`w-3 h-3 rounded-full ${i < recipe.difficulty ? "bg-orange-500" : "bg-gray-300"}`}
+                  ></div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
