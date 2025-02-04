@@ -50,7 +50,7 @@
 ├── package-lock.json
 ├── package.json
 ├── public
-│   └── vite.svg
+│   └── robots.txt
 ├── src
 │   ├── App.css
 │   ├── App.jsx
@@ -66,7 +66,6 @@
 │   │   ├── ListGroup.jsx
 │   │   ├── ModificationRecipes.jsx
 │   │   ├── RecipePopup.jsx
-│   │   └── ShowCard.jsx
 │   ├── data
 │   │   └── recettes.json
 │   ├── index.css

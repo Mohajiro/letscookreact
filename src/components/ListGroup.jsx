@@ -3,9 +3,6 @@ import RecipePopup from "./RecipePopup";
 
 /**
  * Composant `ListGroup` qui affiche une liste de recettes et permet d'ouvrir un pop-up pour voir les détails.
- * 
- * @param {Array} recipes - Liste des recettes à afficher.
- * @param {string} searchQuery - Texte de recherche pour filtrer les recettes.
  */
 function ListGroup({ recipes, searchQuery }) {
   const [selectedRecipe, setSelectedRecipe] = useState(null); // Gérer le pop-up
